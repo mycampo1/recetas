@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio | Recetas</title>
+</head>
+<body>
+    <header>
+        <h1>Recetario</h1>
+        {% if user.is_authenticated %}
+            Bienvenido, {{ user.username }} |
+            <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+        {% else %}
+            <a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a> |
+            <a href="{% url 'registrar' %}">Registrarse</a>
+        {% endif %}
+    </header>
+
+    <form method="get">
+        <input type="text" name="q" placeholder="Buscar recetas..." value="{{ query }}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <hr>
+
+    {% if recetas %}
+        <ul>
+            {% for receta in recetas %}
+                <li><strong>{{ receta.titulo }}</strong> ({{ receta.tiempo }} min) — Etiquetas: {{ receta.etiquetas }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron recetas.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-
 class Receta(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='recetas')
     titulo = models.CharField(max_length=255)
@@ -9,6 +8,7 @@ class Receta(models.Model):
     tiempo = models.PositiveIntegerField(help_text="Tiempo en minutos")
     etiquetas = models.CharField(max_length=255, blank=True)
     creado_en = models.DateTimeField(auto_now_add=True)
+    imagen = models.ImageField(upload_to='recetas_imagenes/', blank=True, null=True)  # Nuevo campo
 
     def __str__(self):
         return self.titulo

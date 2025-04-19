@@ -6,7 +6,7 @@ from .models import Receta
 @login_required
 def agregar_receta(request):
     if request.method == 'POST':
-        formulario = FormularioReceta(request.POST)
+        formulario = FormularioReceta(request.POST, request.FILES)  # Manejar archivos
         if formulario.is_valid():
             receta = formulario.save(commit=False)
             receta.usuario = request.user

@@ -1,6 +1,16 @@
 {% extends 'users/base.html' %}
+
 {% block title %}Inicio{% endblock %}
+
 {% block contenido %}
-<h2>Bienvenido a la plataforma de recetas</h2>
-<p>Has iniciado sesión correctamente.</p>
+    <h2>Bienvenido a la plataforma de recetas</h2>
+    <p>Has iniciado sesión correctamente.</p>
+
+    <h2>Agregar Receta</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ formulario.as_p }}
+        <button type="submit">Guardar receta</button>
+    </form>
+    <a href="{% url 'pagina_principal' %}" class="btn btn-secondary">Volver a la página principal</a>
 {% endblock %}
