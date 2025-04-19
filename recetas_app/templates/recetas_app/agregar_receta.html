@@ -1,0 +1,10 @@
+{% extends 'users/base.html' %}
+{% block title %}Agregar Receta{% endblock %}
+{% block contenido %}
+<h2>Agregar Receta</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ formulario.as_p }}
+    <button type="submit">Guardar receta</button>
+</form>
+{% endblock %}
