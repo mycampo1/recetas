@@ -1,0 +1,50 @@
+# Entorno virtual
+env/
+venv/
+.myenv/
+*/myenv/
+*.pyc
+__pycache__/
+
+# Archivos de configuración de VSCode u otros editores
+.vscode/
+.idea/
+
+# Migraciones (ignora todas menos las que quieras manualmente)
+**/migrations/
+!**/migrations/__init__.py
+
+# Archivos temporales de Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+
+# Archivos de caché
+.cache/
+*.mo
+
+# Archivos de compilación de Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+bin/
+var/
+sdist/
+develop-eggs/
+
+# Archivos de prueba
+coverage.*
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
