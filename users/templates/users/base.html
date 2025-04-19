@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Recetas{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        {% if user.is_authenticated %}
+            Bienvenido, {{ user.username }} |
+            <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+        {% else %}
+            <a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a> |
+            <a href="{% url 'registrar' %}">Registrarse</a>
+        {% endif %}
+    </nav>
+    <hr>
+    {% block contenido %}{% endblock %}
+</body>
+</html>
