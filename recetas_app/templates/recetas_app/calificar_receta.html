@@ -7,6 +7,10 @@
 <form method="post">
     {% csrf_token %}
     {{ formulario.as_p }}
-    <button type="submit">Enviar Calificación</button>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Enviar Calificación</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='{% url 'pagina_principal' %}'">Volver</button>
+    </div>
 </form>
 {% endblock %}

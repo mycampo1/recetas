@@ -6,6 +6,6 @@
     {% csrf_token %}
     {{ formulario.as_p }}
     <button type="submit">Entrar</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'pagina_principal' %}'">Volver</button>
 </form>
-<a href="{% url 'pagina_principal' %}" class="btn btn-secondary">Volver a la página principal</a>
 {% endblock %}
