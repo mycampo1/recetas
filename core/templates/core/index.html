@@ -26,7 +26,16 @@
     {% if recetas %}
         <ul>
             {% for receta in recetas %}
-                <li><strong>{{ receta.titulo }}</strong> ({{ receta.tiempo }} min) — Etiquetas: {{ receta.etiquetas }}</li>
+                <li>
+                    <strong>{{ receta.titulo }}</strong> ({{ receta.tiempo }} min) — Etiquetas: {{ receta.etiquetas }}
+                    {% if user.is_authenticated %}
+                        <!-- Botón para calificar si el usuario está autenticado -->
+                        <a href="{% url 'calificar_receta' receta.id %}">Calificar</a>
+                    {% else %}
+                        <!-- Botón que redirige a iniciar sesión si no está autenticado -->
+                        <a href="{% url 'iniciar_sesion' %}?next={% url 'calificar_receta' receta.id %}">Calificar</a>
+                    {% endif %}
+                </li>
             {% endfor %}
         </ul>
     {% else %}

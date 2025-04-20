@@ -30,3 +30,8 @@ def calificar_receta(request, receta_id):
     else:
         formulario = FormularioCalificacion()
     return render(request, 'recetas_app/calificar_receta.html', {'receta': receta, 'formulario': formulario})
+
+
+def detalle_receta(request, receta_id):
+    receta = get_object_or_404(Receta, id=receta_id)
+    return render(request, 'recetas_app/detalle_receta.html', {'receta': receta})

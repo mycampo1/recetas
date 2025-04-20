@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'users/base.html' %}
 
 {% block title %}Detalle de Receta{% endblock %}
 
@@ -20,4 +20,6 @@
 </ul>
 
 <a href="{% url 'calificar_receta' receta.id %}">Calificar esta receta</a>
+<a href="{% url 'pagina_principal' %}" class="btn btn-secondary">Volver a la página principal</a>
+
 {% endblock %}
