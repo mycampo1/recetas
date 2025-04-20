@@ -1,0 +1,33 @@
+<div id="modalCrearReceta" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Crear Receta</h2>
+        <form method="post" enctype="multipart/form-data" action="{% url 'agregar_receta' %}">
+            {% csrf_token %}
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
+            
+            <label for="ingredientes">Ingredientes:</label>
+            <textarea id="ingredientes" name="ingredientes" rows="3" required></textarea>
+            
+            <label for="pasos">Pasos:</label>
+            <textarea id="pasos" name="pasos" rows="4" required></textarea>
+            
+            <label for="tiempo">Tiempo (minutos):</label>
+            <input type="number" id="tiempo" name="tiempo" required>
+            
+            <label for="categoria">Categoría:</label>
+            <select id="categoria" name="categoria">
+                {% for key, value in categorias %}
+                    <option value="{{ key }}">{{ value }}</option>
+                {% endfor %}
+            </select>
+            
+            <label for="imagen">Imagen:</label>
+            <input type="file" id="imagen" name="imagen">
+            
+            <button type="submit">Guardar</button>
+            <button type="button" id="cancelModalButton">Cancelar</button>
+        </form>
+    </div>
+</div>

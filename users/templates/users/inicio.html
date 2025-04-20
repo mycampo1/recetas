@@ -1,8 +1,15 @@
 {% extends 'users/base.html' %}
+{% load static %}
 
 {% block title %}Inicio{% endblock %}
 
 {% block contenido %}
-<h1>Recetas</h1>
+<div class="header-container">
+    <h1>Recetas</h1>
+    {% if user.is_authenticated and user.is_superuser %}
+        <button type="button" id="openModalButton" class="crear-receta-btn">Crear Receta</button>
+    {% endif %}
+</div>
 {% include 'core/recetas_listado.html' %}
+{% include 'core/modal_crear_receta.html' %}
 {% endblock %}

@@ -59,20 +59,3 @@
 {% else %}
     <p>No se encontraron recetas.</p>
 {% endif %}
-
-<!-- Botón para abrir el modal de creación de recetas -->
-{% if user.is_authenticated and user.is_superuser %}
-    <button type="button" id="openModalButton">Crear Receta</button>
-    <div id="modalCrearReceta" class="modal">
-        <div class="modal-content">
-            <button class="modal-close">&times;</button>
-            <h2>Crear Receta</h2>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ formulario.as_p }}
-                <button type="submit">Guardar</button>
-                <button type="button" id="cancelModalButton">Cancelar</button>
-            </form>
-        </div>
-    </div>
-{% endif %}
