@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 
 from recetas_app.forms import FormularioReceta
+from recetas_app.models import Receta
 from .forms import FormularioRegistro, FormularioInicioSesion
 from django.contrib.auth.decorators import login_required
 
@@ -35,17 +36,27 @@ def cerrar_sesion(request):
 # def inicio(request):
 #     return render(request, 'users/inicio.html')
 
-
 @login_required
 def inicio(request):
-    if request.method == 'POST':
-        formulario = FormularioReceta(request.POST, request.FILES)  # Manejar archivos
+    query = request.GET.get('q', '')  # Obtener el término de búsqueda
+    if query:
+        recetas = Receta.objects.filter(titulo__icontains=query)  # Filtrar recetas por título
+    else:
+        recetas = Receta.objects.all()  # Mostrar todas las recetas
+
+    # Solo superusuarios pueden ver el formulario de creación
+    if request.user.is_superuser and request.method == 'POST':
+        formulario = FormularioReceta(request.POST, request.FILES)
         if formulario.is_valid():
             receta = formulario.save(commit=False)
             receta.usuario = request.user
             receta.save()
-            return redirect('inicio')  # O redirigir a otra vista, como una lista de recetas
+            return redirect('inicio')
     else:
-        formulario = FormularioReceta()
+        formulario = FormularioReceta() if request.user.is_superuser else None
 
-    return render(request, 'users/inicio.html', {'formulario': formulario})
+    return render(request, 'users/inicio.html', {
+        'recetas': recetas,
+        'formulario': formulario,
+        'query': query,
+    })
