@@ -57,3 +57,5 @@ media/*.jpeg
 media/*.mp4
 media/*.avi
 media/*.mov
+/media
+/media/*
