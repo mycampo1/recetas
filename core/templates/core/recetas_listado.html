@@ -1,4 +1,6 @@
-<!-- Formulario de búsqueda y filtrado -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'static/css/recetas.css' %}">
+
 <form method="get" class="busqueda-form">
     <input type="text" name="q" placeholder="Buscar recetas..." value="{{ query }}">
     <select name="categoria">
@@ -12,9 +14,9 @@
 
 <!-- Listado de recetas -->
 {% if recetas %}
-    <ul class="receta-lista">
+    <div class="recetas-grid">
         {% for receta in recetas %}
-            <li class="receta-item">
+            <div class="receta-card">
                 <div class="receta-imagen-container">
                     {% if receta.imagen %}
                         <img src="{{ receta.imagen.url }}" alt="{{ receta.titulo }}" class="receta-imagen">
@@ -33,11 +35,11 @@
                         <span class="estrellas">
                             {% for estrella in receta.estrellas %}
                                 {% if estrella == 'llena' %}
-                                    <span class="material-icons">star</span> <!-- Estrella llena -->
+                                    <span class="material-icons">star</span>
                                 {% elif estrella == 'media' %}
-                                    <span class="material-icons">star_half</span> <!-- Estrella medio llena -->
+                                    <span class="material-icons">star_half</span>
                                 {% else %}
-                                    <span class="material-icons">star_outline</span> <!-- Estrella vacía -->
+                                    <span class="material-icons">star_outline</span>
                                 {% endif %}
                             {% endfor %}
                         </span>
@@ -45,17 +47,17 @@
                     </div>
 
                     <div class="receta-acciones">
-                        <a href="{% url 'detalle_receta' receta.id %}">Ver detalles</a>
+                        <a href="{% url 'detalle_receta' receta.id %}" class="btn-detalle">Ver detalles</a>
                         {% if user.is_authenticated %}
-                            <a href="{% url 'calificar_receta' receta.id %}">Calificar</a>
+                            <a href="{% url 'calificar_receta' receta.id %}" class="btn-calificar">Calificar</a>
                         {% else %}
-                            <a href="{% url 'iniciar_sesion' %}?next={% url 'calificar_receta' receta.id %}">Iniciar sesión para calificar</a>
+                            <a href="{% url 'iniciar_sesion' %}?next={% url 'calificar_receta' receta.id %}" class="btn-login">Iniciar sesión para calificar</a>
                         {% endif %}
                     </div>
                 </div>
-            </li>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% else %}
     <p>No se encontraron recetas.</p>
 {% endif %}
