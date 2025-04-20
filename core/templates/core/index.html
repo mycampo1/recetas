@@ -1,71 +1,58 @@
-<!-- filepath: c:\Users\barri\Downloads\RECETAS\recetas\core\templates\core\index.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Inicio | Recetas</title>
-</head>
-<body>
-    <header>
-        <h1>Recetario</h1>
-        {% if user.is_authenticated %}
-            Bienvenido, {{ user.username }} |
-            <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
-        {% else %}
-            <a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a> |
-            <a href="{% url 'registrar' %}">Registrarse</a>
-        {% endif %}
-    </header>
+{% extends 'users/base.html' %}
 
-    <form method="get">
-        <input type="text" name="q" placeholder="Buscar recetas..." value="{{ query }}">
-        <button type="submit">Buscar</button>
-    </form>
+{% block title %}Inicio | Recetas{% endblock %}
 
-    <hr>
+{% block contenido %}
+<h1>Recetario</h1>
 
-    {% if recetas %}
-        <ul>
-            {% for receta in recetas %}
-                <li>
-                    <strong>{{ receta.titulo }}</strong> ({{ receta.tiempo }} min) — Etiquetas: {{ receta.etiquetas }}
-                    {% if user.is_authenticated %}
-                        <!-- Botón para calificar si el usuario está autenticado -->
-                        <a href="{% url 'calificar_receta' receta.id %}">Calificar</a>
-                    {% else %}
-                        <!-- Botón que redirige a iniciar sesión si no está autenticado -->
-                        <a href="{% url 'iniciar_sesion' %}?next={% url 'calificar_receta' receta.id %}">Calificar</a>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No se encontraron recetas.</p>
-    {% endif %}
+<!-- Formulario de búsqueda y filtrado -->
+<form method="get">
+    <input type="text" name="q" placeholder="Buscar recetas..." value="{{ query }}">
+    <select name="categoria">
+        <option value="">Todas las categorías</option>
+        {% for key, value in categorias %}
+            <option value="{{ key }}" {% if key == categoria %}selected{% endif %}>{{ value }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Buscar</button>
+</form>
 
-    <!-- Botón para abrir el modal de creación de recetas (solo para superusuarios) -->
-    {% if user.is_superuser %}
-        <button type="button" id="openModalButton">Crear Receta</button>
-    {% endif %}
+<hr>
 
-    <!-- Modal para crear recetas -->
-    <div id="modalCrearReceta" class="modal" style="display: none;">
-        <div class="modal-content">
-            <button class="modal-close" onclick="document.getElementById('modalCrearReceta').style.display='none'">&times;</button>
-            <h2>Crear Receta</h2>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ formulario.as_p }}
-                <button type="submit">Guardar</button>
-                <button type="button" onclick="document.getElementById('modalCrearReceta').style.display='none'">Cancelar</button>
-            </form>
-        </div>
+<!-- Listado de recetas -->
+{% if recetas %}
+    <ul>
+        {% for receta in recetas %}
+            <li>
+                <strong>{{ receta.titulo }}</strong> ({{ receta.tiempo }} min) — Categoría: {{ receta.get_categoria_display }}
+                {% if user.is_authenticated %}
+                    <a href="{% url 'calificar_receta' receta.id %}">Calificar</a>
+                {% else %}
+                    <a href="{% url 'iniciar_sesion' %}?next={% url 'calificar_receta' receta.id %}">Calificar</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No se encontraron recetas.</p>
+{% endif %}
+
+<!-- Botón para abrir el modal de creación de recetas (solo para superusuarios) -->
+{% if user.is_superuser %}
+    <button type="button" id="openModalButton">Crear Receta</button>
+{% endif %}
+
+<!-- Modal para crear recetas -->
+<div id="modalCrearReceta" class="modal">
+    <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <h2>Crear Receta</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ formulario.as_p }}
+            <button type="submit">Guardar</button>
+            <button type="button" id="cancelModalButton">Cancelar</button>
+        </form>
     </div>
-
-    <script>
-        document.getElementById('openModalButton')?.addEventListener('click', () => {
-            document.getElementById('modalCrearReceta').style.display = 'flex';
-        });
-    </script>
-</body>
-</html>
+</div>
+{% endblock %}
