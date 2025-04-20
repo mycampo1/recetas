@@ -1,28 +1,38 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Recetas{% endblock %}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'css/recetas.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <nav>
-        {% if user.is_authenticated %}
-            Bienvenido, {{ user.username }} |
-            <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
-        {% else %}
-            <a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a> |
-            <a href="{% url 'registrar' %}">Registrarse</a>
-        {% endif %}
+        <div class="brand">Recetario</div>
+        <div>
+            {% if user.is_authenticated %}
+                Bienvenido, {{ user.username }} |
+                <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+            {% else %}
+                <a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a> |
+                <a href="{% url 'registrar' %}">Registrarse</a>
+            {% endif %}
+        </div>
     </nav>
-    <hr>
     
-    <!-- Bloque de contenido dinámico -->
-    {% block contenido %}{% endblock %}
+    <div class="container">
+        <!-- Bloque de contenido dinámico -->
+        {% block contenido %}{% endblock %}
+    </div>
     
     <!-- Enlace a los scripts JavaScript -->
     <script src="{% static 'js/modal.js' %}"></script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

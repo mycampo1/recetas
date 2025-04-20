@@ -9,19 +9,28 @@
     z-index: 1000;
     justify-content: center;
     align-items: center;
+    opacity: 0;
     transition: opacity 0.3s ease;
 }
 
 .modal-content {
     background-color: #fff;
-    padding: 20px;
+    padding: 25px;
     border-radius: 8px;
     width: 90%;
     max-width: 500px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: left;
     position: relative;
-    animation: fadeIn 0.3s ease-in-out;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-content h2 {
+    color: #2C3E50;
+    margin-top: 0;
+    border-bottom: 2px solid #E3F2FD;
+    padding-bottom: 10px;
 }
 
 .modal-close {
@@ -29,11 +38,16 @@
     border: none;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
+    color: #7F8C8D;
     cursor: pointer;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #2C3E50;
 }
 
 .modal-content button {
@@ -46,22 +60,19 @@
 }
 
 .modal-content button[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #5D8AA8;
     color: white;
+}
+
+.modal-content button[type="submit"]:hover {
+    background-color: #4A6670;
 }
 
 .modal-content button[type="button"] {
-    background-color: #f44336;
+    background-color: #95A5A6;
     color: white;
 }
 
-@keyframes fadeIn {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+.modal-content button[type="button"]:hover {
+    background-color: #7F8C8D;
 }

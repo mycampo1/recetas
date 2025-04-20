@@ -6,7 +6,7 @@
 <h1>Recetario</h1>
 
 <!-- Formulario de búsqueda y filtrado -->
-<form method="get">
+<form method="get" class="busqueda-form">
     <input type="text" name="q" placeholder="Buscar recetas..." value="{{ query }}">
     <select name="categoria">
         <option value="">Todas las categorías</option>
@@ -17,19 +17,24 @@
     <button type="submit">Buscar</button>
 </form>
 
-<hr>
-
 <!-- Listado de recetas -->
 {% if recetas %}
-    <ul>
+    <ul class="receta-lista">
         {% for receta in recetas %}
-            <li>
-                <strong>{{ receta.titulo }}</strong> ({{ receta.tiempo }} min) — Categoría: {{ receta.get_categoria_display }}
-                {% if user.is_authenticated %}
-                    <a href="{% url 'calificar_receta' receta.id %}">Calificar</a>
-                {% else %}
-                    <a href="{% url 'iniciar_sesion' %}?next={% url 'calificar_receta' receta.id %}">Calificar</a>
-                {% endif %}
+            <li class="receta-item">
+                <h3 class="receta-titulo">{{ receta.titulo }}</h3>
+                <div class="receta-meta">
+                    <span>Tiempo: {{ receta.tiempo }} minutos</span> — 
+                    <span class="receta-categoria">{{ receta.get_categoria_display }}</span>
+                </div>
+                <div class="receta-acciones">
+                    <a href="{% url 'detalle_receta' receta.id %}">Ver detalles</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'calificar_receta' receta.id %}">Calificar</a>
+                    {% else %}
+                        <a href="{% url 'iniciar_sesion' %}?next={% url 'calificar_receta' receta.id %}">Iniciar sesión para calificar</a>
+                    {% endif %}
+                </div>
             </li>
         {% endfor %}
     </ul>
@@ -38,21 +43,23 @@
 {% endif %}
 
 <!-- Botón para abrir el modal de creación de recetas (solo para superusuarios) -->
-{% if user.is_superuser %}
+{% if user.is_authenticated and user.is_superuser %}
     <button type="button" id="openModalButton">Crear Receta</button>
 {% endif %}
 
-<!-- Modal para crear recetas -->
-<div id="modalCrearReceta" class="modal">
-    <div class="modal-content">
-        <button class="modal-close">&times;</button>
-        <h2>Crear Receta</h2>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ formulario.as_p }}
-            <button type="submit">Guardar</button>
-            <button type="button" id="cancelModalButton">Cancelar</button>
-        </form>
+<!-- Modal para crear recetas - solo se renderiza para superusuarios -->
+{% if user.is_authenticated and user.is_superuser %}
+    <div id="modalCrearReceta" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2>Crear Receta</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ formulario.as_p }}
+                <button type="submit">Guardar</button>
+                <button type="button" id="cancelModalButton">Cancelar</button>
+            </form>
+        </div>
     </div>
-</div>
+{% endif %}
 {% endblock %}

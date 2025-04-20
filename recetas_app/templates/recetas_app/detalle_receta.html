@@ -1,25 +1,45 @@
 {% extends 'users/base.html' %}
 
-{% block title %}Detalle de Receta{% endblock %}
+{% block title %}{{ receta.titulo }}{% endblock %}
 
 {% block contenido %}
-<h2>{{ receta.titulo }}</h2>
-<p>{{ receta.ingredientes }}</p>
-<p>{{ receta.pasos }}</p>
+<div class="receta-detalle">
+    <h2>{{ receta.titulo }}</h2>
+    <div class="receta-meta">
+        <span>Tiempo: {{ receta.tiempo }} minutos</span> — 
+        <span class="receta-categoria">{{ receta.get_categoria_display }}</span>
+    </div>
+    
+    <div class="ingredientes">
+        <h3>Ingredientes</h3>
+        <p>{{ receta.ingredientes|linebreaks }}</p>
+    </div>
+    
+    <div class="pasos">
+        <h3>Preparación</h3>
+        <p>{{ receta.pasos|linebreaks }}</p>
+    </div>
+</div>
 
-<h3>Calificaciones y Comentarios</h3>
-<ul>
-    {% for calificacion in receta.calificaciones.all %}
-        <li>
-            <strong>{{ calificacion.usuario }}:</strong> {{ calificacion.puntuacion }} estrellas
-            <p>{{ calificacion.comentario }}</p>
-        </li>
-    {% empty %}
-        <p>No hay calificaciones aún.</p>
-    {% endfor %}
-</ul>
+<div class="comentarios">
+    <h3>Calificaciones y Comentarios</h3>
+    <ul class="comentarios-lista">
+        {% for calificacion in receta.calificaciones.all %}
+            <li class="comentario">
+                <div>
+                    <span class="comentario-usuario">{{ calificacion.usuario }}</span>
+                    <span class="puntuacion">{{ calificacion.puntuacion }} estrellas</span>
+                </div>
+                <p>{{ calificacion.comentario }}</p>
+            </li>
+        {% empty %}
+            <p>No hay calificaciones aún.</p>
+        {% endfor %}
+    </ul>
 
-<a href="{% url 'calificar_receta' receta.id %}">Calificar esta receta</a>
-<a href="{% url 'pagina_principal' %}" class="btn btn-secondary">Volver a la página principal</a>
-
+    <div class="receta-acciones">
+        <a href="{% url 'calificar_receta' receta.id %}" class="btn btn-primary">Calificar esta receta</a>
+        <a href="{% url 'pagina_principal' %}" class="btn btn-secondary">Volver a la página principal</a>
+    </div>
+</div>
 {% endblock %}
