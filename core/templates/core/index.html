@@ -1,3 +1,4 @@
+<!-- filepath: c:\Users\barri\Downloads\RECETAS\recetas\core\templates\core\index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -41,5 +42,30 @@
     {% else %}
         <p>No se encontraron recetas.</p>
     {% endif %}
+
+    <!-- Botón para abrir el modal de creación de recetas (solo para superusuarios) -->
+    {% if user.is_superuser %}
+        <button type="button" id="openModalButton">Crear Receta</button>
+    {% endif %}
+
+    <!-- Modal para crear recetas -->
+    <div id="modalCrearReceta" class="modal" style="display: none;">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modalCrearReceta').style.display='none'">&times;</button>
+            <h2>Crear Receta</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ formulario.as_p }}
+                <button type="submit">Guardar</button>
+                <button type="button" onclick="document.getElementById('modalCrearReceta').style.display='none'">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('openModalButton')?.addEventListener('click', () => {
+            document.getElementById('modalCrearReceta').style.display = 'flex';
+        });
+    </script>
 </body>
 </html>
