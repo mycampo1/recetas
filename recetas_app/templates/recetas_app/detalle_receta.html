@@ -1,10 +1,21 @@
+<!-- filepath: c:\Users\barri\Downloads\RECETAS\recetas\recetas_app\templates\recetas_app\detalle_receta.html -->
 {% extends 'users/base.html' %}
 
 {% block title %}{{ receta.titulo }}{% endblock %}
 
 {% block contenido %}
 <div class="receta-detalle">
-    <h2>{{ receta.titulo }}</h2>
+    <div class="receta-header">
+        <h2>{{ receta.titulo }}</h2>
+        <div class="receta-acciones-header">
+            <a href="{% url 'calificar_receta' receta.id %}" class="btn-icon" title="Calificar receta">
+                <i class="fas fa-star"></i>
+            </a>
+            <a href="{% url 'pagina_principal' %}" class="btn-icon" title="Volver a la página principal">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
     
     {% if receta.imagen %}
         <div class="receta-imagen-detalle">
@@ -28,7 +39,6 @@
             </span>
             <span class="puntuacion-valor">({{ receta.puntuacion_promedio|floatformat:1 }} - {{ receta.total_calificaciones }} calificaciones)</span>
         </div>
-        
     </div>
     
     <div class="ingredientes">
@@ -65,10 +75,5 @@
             <p>No hay calificaciones aún.</p>
         {% endfor %}
     </ul>
-
-    <div class="receta-acciones">
-        <a href="{% url 'calificar_receta' receta.id %}" class="btn btn-primary">Calificar esta receta</a>
-        <a href="{% url 'pagina_principal' %}" class="btn btn-secondary">Volver a la página principal</a>
-    </div>
 </div>
 {% endblock %}

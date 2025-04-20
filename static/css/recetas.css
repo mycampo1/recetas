@@ -202,3 +202,40 @@
     vertical-align: middle;
     margin-right: 2px;
 }
+
+
+.receta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.receta-acciones-header {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-icon:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-icon i {
+    pointer-events: none;
+}
