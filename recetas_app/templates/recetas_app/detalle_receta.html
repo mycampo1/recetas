@@ -5,9 +5,30 @@
 {% block contenido %}
 <div class="receta-detalle">
     <h2>{{ receta.titulo }}</h2>
+    
+    {% if receta.imagen %}
+        <div class="receta-imagen-detalle">
+            <img src="{{ receta.imagen.url }}" alt="{{ receta.titulo }}">
+        </div>
+    {% endif %}
+    
     <div class="receta-meta">
         <span>Tiempo: {{ receta.tiempo }} minutos</span> — 
         <span class="receta-categoria">{{ receta.get_categoria_display }}</span>
+        
+        <div class="receta-puntuacion">
+            <span class="estrellas">
+                {% for i in '12345' %}
+                    {% if forloop.counter <= receta.puntuacion_promedio|floatformat:'0' %}
+                        ★
+                    {% else %}
+                        ☆
+                    {% endif %}
+                {% endfor %}
+            </span>
+            <span class="puntuacion-valor">({{ receta.puntuacion_promedio|floatformat:1 }} - {{ receta.total_calificaciones }} calificaciones)</span>
+        </div>
+        
     </div>
     
     <div class="ingredientes">
@@ -28,7 +49,15 @@
             <li class="comentario">
                 <div>
                     <span class="comentario-usuario">{{ calificacion.usuario }}</span>
-                    <span class="puntuacion">{{ calificacion.puntuacion }} estrellas</span>
+                    <span class="puntuacion">
+                        {% for i in '12345' %}
+                            {% if forloop.counter <= calificacion.puntuacion %}
+                                ★
+                            {% else %}
+                                ☆
+                            {% endif %}
+                        {% endfor %}
+                    </span>
                 </div>
                 <p>{{ calificacion.comentario }}</p>
             </li>

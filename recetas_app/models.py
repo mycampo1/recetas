@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.db.models import Avg
 
 class Receta(models.Model):
     CATEGORIAS = [
@@ -14,12 +15,21 @@ class Receta(models.Model):
     ingredientes = models.TextField()
     pasos = models.TextField()
     tiempo = models.PositiveIntegerField(help_text="Tiempo en minutos")
-    categoria = models.CharField(max_length=50, choices=CATEGORIAS, default='saladas')  # Nuevo campo
+    categoria = models.CharField(max_length=50, choices=CATEGORIAS, default='saladas')
     creado_en = models.DateTimeField(auto_now_add=True)
     imagen = models.ImageField(upload_to='recetas_imagenes/', blank=True, null=True)
 
     def __str__(self):
         return self.titulo
+    
+    @property
+    def puntuacion_promedio(self):
+        promedio = self.calificaciones.aggregate(Avg('puntuacion'))['puntuacion__avg']
+        return promedio if promedio else 0
+    
+    @property
+    def total_calificaciones(self):
+        return self.calificaciones.count()
 
 class Calificacion(models.Model):
     receta = models.ForeignKey(Receta, on_delete=models.CASCADE, related_name='calificaciones')

@@ -116,3 +116,82 @@
         align-items: stretch;
     }
 }
+
+
+/* Añadir al final del archivo */
+
+/* Estilos para las imágenes de recetas */
+.receta-item {
+    display: flex;
+    gap: 15px;
+}
+
+.receta-imagen-container {
+    flex: 0 0 120px;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+}
+
+.receta-imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.receta-imagen-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.receta-content {
+    flex: 1;
+}
+
+.receta-rating {
+    margin: 8px 0;
+}
+
+.estrellas {
+    color: #F39C12;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.puntuacion-valor {
+    color: #7F8C8D;
+    font-size: 0.9rem;
+    margin-left: 5px;
+}
+
+/* Estilos para el detalle de la receta */
+.receta-imagen-detalle {
+    margin: 20px 0;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 400px;
+}
+
+.receta-imagen-detalle img {
+    max-width: 100%;
+    height: auto;
+}
+
+.receta-puntuacion {
+    margin: 15px 0;
+}
+
+/* Estilo mejorado para comentarios */
+.comentario .puntuacion {
+    color: #F39C12;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    margin-left: 8px;
+}
