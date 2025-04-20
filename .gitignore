@@ -48,3 +48,12 @@ htmlcov/
 # Archivos de sistema
 .DS_Store
 Thumbs.db
+
+media
+media/*.jpg
+media/*.png
+media/*.gif
+media/*.jpeg
+media/*.mp4
+media/*.avi
+media/*.mov
