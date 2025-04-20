@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Calificar Receta{% endblock %}
+
+{% block contenido %}
+<h2>Calificar Receta: {{ receta.titulo }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ formulario.as_p }}
+    <button type="submit">Enviar Calificación</button>
+</form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Receta{% endblock %}
+
+{% block contenido %}
+<h2>{{ receta.titulo }}</h2>
+<p>{{ receta.ingredientes }}</p>
+<p>{{ receta.pasos }}</p>
+
+<h3>Calificaciones y Comentarios</h3>
+<ul>
+    {% for calificacion in receta.calificaciones.all %}
+        <li>
+            <strong>{{ calificacion.usuario }}:</strong> {{ calificacion.puntuacion }} estrellas
+            <p>{{ calificacion.comentario }}</p>
+        </li>
+    {% empty %}
+        <p>No hay calificaciones aún.</p>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'calificar_receta' receta.id %}">Calificar esta receta</a>
+{% endblock %}

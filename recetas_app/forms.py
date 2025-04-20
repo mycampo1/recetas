@@ -1,5 +1,5 @@
 from django import forms
-from .models import Receta
+from .models import Receta, Calificacion
 
 class FormularioReceta(forms.ModelForm):
     class Meta:
@@ -16,4 +16,16 @@ class FormularioReceta(forms.ModelForm):
         widgets = {
             'ingredientes': forms.Textarea(attrs={'rows': 3}),
             'pasos': forms.Textarea(attrs={'rows': 4}),
+        }
+
+class FormularioCalificacion(forms.ModelForm):
+    class Meta:
+        model = Calificacion
+        fields = ['puntuacion', 'comentario']
+        labels = {
+            'puntuacion': 'Puntuación (1-5)',
+            'comentario': 'Comentario',
+        }
+        widgets = {
+            'comentario': forms.Textarea(attrs={'rows': 3}),
         }

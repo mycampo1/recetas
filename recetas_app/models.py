@@ -12,3 +12,13 @@ class Receta(models.Model):
 
     def __str__(self):
         return self.titulo
+
+class Calificacion(models.Model):
+    receta = models.ForeignKey(Receta, on_delete=models.CASCADE, related_name='calificaciones')
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    puntuacion = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)])  # Calificación de 1 a 5
+    comentario = models.TextField(blank=True)
+    creado_en = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.usuario} - {self.receta} - {self.puntuacion}"
