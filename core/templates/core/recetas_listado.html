@@ -28,22 +28,22 @@
                         <span>Tiempo: {{ receta.tiempo }} minutos</span> — 
                         <span class="receta-categoria">{{ receta.get_categoria_display }}</span>
                     </div>
-                                        <!-- ...existing code... -->
                     
                     <div class="receta-rating">
                         <span class="estrellas">
-                            {% for i in '12345' %}
-                                {% if forloop.counter <= receta.puntuacion_promedio|floatformat:'0' %}
-                                    ★
+                            {% for estrella in receta.estrellas %}
+                                {% if estrella == 'llena' %}
+                                    <span class="material-icons">star</span> <!-- Estrella llena -->
+                                {% elif estrella == 'media' %}
+                                    <span class="material-icons">star_half</span> <!-- Estrella medio llena -->
                                 {% else %}
-                                    ☆
+                                    <span class="material-icons">star_outline</span> <!-- Estrella vacía -->
                                 {% endif %}
                             {% endfor %}
                         </span>
                         <span class="puntuacion-valor">({{ receta.puntuacion_promedio|floatformat:1 }})</span>
                     </div>
-                    
-                    <!-- ...existing code... -->
+
                     <div class="receta-acciones">
                         <a href="{% url 'detalle_receta' receta.id %}">Ver detalles</a>
                         {% if user.is_authenticated %}
