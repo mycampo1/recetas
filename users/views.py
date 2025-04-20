@@ -31,7 +31,7 @@ def iniciar_sesion(request):
 
 def cerrar_sesion(request):
     logout(request)
-    return redirect('iniciar_sesion')
+    return redirect('pagina_principal')
 
 # @login_required
 # def inicio(request):
