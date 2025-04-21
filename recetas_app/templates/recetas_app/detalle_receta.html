@@ -8,13 +8,19 @@
     <div class="receta-header">
         <h2>{{ receta.titulo }}</h2>
         <div class="receta-acciones-header">
-            <a href="{% url 'calificar_receta' receta.id %}" class="btn-icon" title="Calificar receta">
-                <i class="fas fa-star"></i>
-            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'calificar_receta' receta.id %}" class="btn-icon" title="Calificar receta">
+                    <i class="fas fa-star"></i>
+                </a>
+            {% else %}
+                <a href="{% url 'iniciar_sesion' %}?next={% url 'calificar_receta' receta.id %}" class="btn-icon" title="Inicia sesión para calificar">
+                    <i class="fas fa-star"></i>
+                </a>
+            {% endif %}
             <a href="{% url 'pagina_principal' %}" class="btn-icon" title="Volver a la página principal">
                 <i class="fas fa-arrow-left"></i>
             </a>
-        </div>
+        </div>        
     </div>
     
     {% if receta.imagen %}
